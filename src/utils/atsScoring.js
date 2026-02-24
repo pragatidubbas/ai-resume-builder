@@ -25,10 +25,11 @@ export function calculateATSScore(resume) {
   }
 
   // +10 if skills list has ≥ 8 items
-  const skillsArray = resume.skills
-    .split(',')
-    .map(s => s.trim())
-    .filter(s => s.length > 0);
+  const skillsArray = [
+    ...(resume.skills.technical || []),
+    ...(resume.skills.soft || []),
+    ...(resume.skills.tools || [])
+  ];
   if (skillsArray.length >= 8) {
     score += 10;
   } else {

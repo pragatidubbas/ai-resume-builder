@@ -3,6 +3,8 @@ import Navigation from '../components/Navigation';
 import ResumePreview from '../components/ResumePreview';
 import ATSScore from '../components/ATSScore';
 import TemplateSelector from '../components/TemplateSelector';
+import SkillsSection from '../components/SkillsSection';
+import ProjectsSection from '../components/ProjectsSection';
 import { resumeStore } from '../store/resumeStore';
 import { calculateATSScore } from '../utils/atsScoring';
 import { getTopImprovements } from '../utils/improvements';
@@ -46,10 +48,6 @@ function Builder() {
 
   const handleSummaryChange = (value) => {
     setResume(prev => ({ ...prev, summary: value }));
-  };
-
-  const handleSkillsChange = (value) => {
-    setResume(prev => ({ ...prev, skills: value }));
   };
 
   const handleLinksChange = (field, value) => {
@@ -108,34 +106,6 @@ function Builder() {
     setResume(prev => ({
       ...prev,
       experience: prev.experience.filter(exp => exp.id !== id)
-    }));
-  };
-
-  const addProject = () => {
-    setResume(prev => ({
-      ...prev,
-      projects: [...prev.projects, { 
-        id: Date.now(), 
-        name: '', 
-        description: '', 
-        tech: '' 
-      }]
-    }));
-  };
-
-  const updateProject = (id, field, value) => {
-    setResume(prev => ({
-      ...prev,
-      projects: prev.projects.map(proj => 
-        proj.id === id ? { ...proj, [field]: value } : proj
-      )
-    }));
-  };
-
-  const removeProject = (id) => {
-    setResume(prev => ({
-      ...prev,
-      projects: prev.projects.filter(proj => proj.id !== id)
     }));
   };
 
@@ -282,57 +252,15 @@ function Builder() {
             })}
           </section>
 
-          <section className="form-section">
-            <div className="section-header">
-              <h3>Projects</h3>
-              <button className="add-btn" onClick={addProject}>+ Add</button>
-            </div>
-            {resume.projects.map(proj => {
-              const bulletSuggestions = checkBulletGuidance(proj.description);
-              return (
-                <div key={proj.id} className="entry-card">
-                  <input
-                    type="text"
-                    placeholder="Project Name"
-                    value={proj.name}
-                    onChange={(e) => updateProject(proj.id, 'name', e.target.value)}
-                  />
-                  <textarea
-                    placeholder="Project description..."
-                    rows={2}
-                    value={proj.description}
-                    onChange={(e) => updateProject(proj.id, 'description', e.target.value)}
-                  />
-                  {bulletSuggestions.length > 0 && proj.description && (
-                    <div className="bullet-guidance">
-                      {bulletSuggestions.map((suggestion, idx) => (
-                        <span key={idx} className="guidance-hint">{suggestion}</span>
-                      ))}
-                    </div>
-                  )}
-                  <input
-                    type="text"
-                    placeholder="Technologies used"
-                    value={proj.tech}
-                    onChange={(e) => updateProject(proj.id, 'tech', e.target.value)}
-                  />
-                  <button className="remove-btn" onClick={() => removeProject(proj.id)}>
-                    Remove
-                  </button>
-                </div>
-              );
-            })}
-          </section>
+          <ProjectsSection
+            projects={resume.projects}
+            onChange={(projects) => setResume(prev => ({ ...prev, projects }))}
+          />
 
-          <section className="form-section">
-            <h3>Skills</h3>
-            <input
-              type="text"
-              placeholder="Comma-separated skills (e.g., JavaScript, React, Node.js)"
-              value={resume.skills}
-              onChange={(e) => handleSkillsChange(e.target.value)}
-            />
-          </section>
+          <SkillsSection
+            skills={resume.skills}
+            onChange={(skills) => setResume(prev => ({ ...prev, skills }))}
+          />
 
           <section className="form-section">
             <h3>Links</h3>

@@ -12,7 +12,11 @@ const defaultResume = {
   education: [],
   experience: [],
   projects: [],
-  skills: '',
+  skills: {
+    technical: [],
+    soft: [],
+    tools: []
+  },
   links: {
     github: '',
     linkedin: ''
@@ -75,10 +79,16 @@ export const resumeStore = {
           id: Date.now(),
           name: 'E-commerce Platform',
           description: 'Built a full-stack e-commerce platform with payment integration and real-time inventory management.',
-          tech: 'React, Node.js, PostgreSQL, Stripe'
+          tech: ['React', 'Node.js', 'PostgreSQL', 'Stripe'],
+          liveUrl: '',
+          githubUrl: ''
         }
       ],
-      skills: 'JavaScript, TypeScript, React, Node.js, Python, PostgreSQL, AWS, Docker, Git',
+      skills: {
+        technical: ['JavaScript', 'TypeScript', 'React', 'Node.js', 'Python', 'PostgreSQL'],
+        soft: ['Communication', 'Problem Solving'],
+        tools: ['AWS', 'Docker', 'Git']
+      },
       links: {
         github: 'github.com/alexjohnson',
         linkedin: 'linkedin.com/in/alexjohnson'

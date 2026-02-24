@@ -137,8 +137,8 @@ function Preview() {
                     {proj.description && (
                       <p className="preview-text">{proj.description}</p>
                     )}
-                    {proj.tech && (
-                      <p className="preview-tech">{proj.tech}</p>
+                    {proj.tech && proj.tech.length > 0 && (
+                      <p className="preview-tech">{proj.tech.join(', ')}</p>
                     )}
                   </div>
                 )
@@ -165,10 +165,26 @@ function Preview() {
             </div>
           )}
 
-          {resume.skills && (
+          {(resume.skills.technical?.length > 0 || resume.skills.soft?.length > 0 || resume.skills.tools?.length > 0) && (
             <div className="preview-section">
               <h2 className="preview-section-title">Skills</h2>
-              <p className="preview-text">{resume.skills}</p>
+              <div className="preview-skills-grouped">
+                {resume.skills.technical?.length > 0 && (
+                  <div className="preview-skill-category">
+                    <strong>Technical:</strong> {resume.skills.technical.join(', ')}
+                  </div>
+                )}
+                {resume.skills.soft?.length > 0 && (
+                  <div className="preview-skill-category">
+                    <strong>Soft Skills:</strong> {resume.skills.soft.join(', ')}
+                  </div>
+                )}
+                {resume.skills.tools?.length > 0 && (
+                  <div className="preview-skill-category">
+                    <strong>Tools:</strong> {resume.skills.tools.join(', ')}
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </div>

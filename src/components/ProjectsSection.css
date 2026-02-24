@@ -1,0 +1,174 @@
+.projects-section .section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.project-entry {
+  background: #fafafa;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.project-entry:hover {
+  border-color: #ccc;
+}
+
+.project-entry.expanded {
+  border-color: #0a0a0a;
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  cursor: pointer;
+  background: #fff;
+  transition: background 0.2s;
+}
+
+.project-header:hover {
+  background: #fafafa;
+}
+
+.project-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #0a0a0a;
+  margin: 0;
+}
+
+.project-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.expand-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  font-size: 16px;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.expand-btn:hover {
+  border-color: #0a0a0a;
+  color: #0a0a0a;
+}
+
+.project-form {
+  padding: 20px;
+  border-top: 1px solid #e5e5e5;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.project-form input,
+.project-form textarea {
+  width: 100%;
+  padding: 12px 16px;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.project-form input:focus,
+.project-form textarea:focus {
+  outline: none;
+  border-color: #0a0a0a;
+}
+
+.textarea-wrapper {
+  position: relative;
+}
+
+.textarea-wrapper textarea {
+  resize: vertical;
+  min-height: 80px;
+  padding-bottom: 28px;
+}
+
+.char-counter {
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  font-size: 12px;
+  color: #999;
+}
+
+.tech-stack-input {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tech-stack-input label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #0a0a0a;
+}
+
+.tech-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 32px;
+}
+
+.tech-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: #f0f0f0;
+  color: #333;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.tech-chip .chip-remove {
+  width: 14px;
+  height: 14px;
+  background: rgba(0, 0, 0, 0.1);
+  color: #666;
+  font-size: 10px;
+}
+
+.tech-chip .chip-remove:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.project-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .project-links {
+    grid-template-columns: 1fr;
+  }
+}

@@ -73,7 +73,9 @@ export function generateResumeText(resume) {
           lines.push(`• ${bullet}${bullet.endsWith('.') ? '' : '.'}`);
         });
       }
-      if (proj.tech) lines.push(`Technologies: ${proj.tech}`);
+      if (proj.tech && proj.tech.length > 0) lines.push(`Technologies: ${proj.tech.join(', ')}`);
+      if (proj.liveUrl) lines.push(`Live: ${proj.liveUrl}`);
+      if (proj.githubUrl) lines.push(`GitHub: ${proj.githubUrl}`);
       lines.push('');
     });
   }
@@ -92,10 +94,21 @@ export function generateResumeText(resume) {
   }
 
   // Skills
-  if (resume.skills) {
+  const hasSkills = resume.skills.technical?.length > 0 || 
+                    resume.skills.soft?.length > 0 || 
+                    resume.skills.tools?.length > 0;
+  if (hasSkills) {
     lines.push('SKILLS');
     lines.push('-'.repeat(40));
-    lines.push(resume.skills);
+    if (resume.skills.technical?.length > 0) {
+      lines.push(`Technical: ${resume.skills.technical.join(', ')}`);
+    }
+    if (resume.skills.soft?.length > 0) {
+      lines.push(`Soft Skills: ${resume.skills.soft.join(', ')}`);
+    }
+    if (resume.skills.tools?.length > 0) {
+      lines.push(`Tools: ${resume.skills.tools.join(', ')}`);
+    }
     lines.push('');
   }
 

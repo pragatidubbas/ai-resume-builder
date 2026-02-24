@@ -376,6 +376,23 @@
   font-size: 16px;
 }
 
+.preview-skills-grouped {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.preview-skill-category {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+}
+
+.preview-skill-category strong {
+  color: #0a0a0a;
+  font-weight: 600;
+}
+
 @media print {
   /* Hide UI elements */
   .preview-page {

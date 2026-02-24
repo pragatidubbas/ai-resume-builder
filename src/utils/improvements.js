@@ -31,10 +31,11 @@ export function getTopImprovements(resume) {
   }
 
   // Check skills count
-  const skillsArray = resume.skills
-    .split(',')
-    .map(s => s.trim())
-    .filter(s => s.length > 0);
+  const skillsArray = [
+    ...(resume.skills.technical || []),
+    ...(resume.skills.soft || []),
+    ...(resume.skills.tools || [])
+  ];
   if (skillsArray.length < 8) {
     improvements.push({
       priority: 4,
