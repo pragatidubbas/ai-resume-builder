@@ -1,4 +1,5 @@
 const STORAGE_KEY = 'resumeBuilderData';
+const TEMPLATE_KEY = 'resumeTemplate';
 
 const defaultResume = {
   personalInfo: {
@@ -26,6 +27,14 @@ export const resumeStore = {
 
   saveResume(data) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  },
+
+  getTemplate() {
+    return localStorage.getItem(TEMPLATE_KEY) || 'classic';
+  },
+
+  saveTemplate(template) {
+    localStorage.setItem(TEMPLATE_KEY, template);
   },
 
   loadSampleData() {

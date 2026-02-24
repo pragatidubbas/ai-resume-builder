@@ -1,6 +1,6 @@
 import './ResumePreview.css';
 
-function ResumePreview({ resume }) {
+function ResumePreview({ resume, template = 'classic' }) {
   const hasContent = resume.personalInfo.name || 
                      resume.personalInfo.email || 
                      resume.personalInfo.phone || 
@@ -10,7 +10,7 @@ function ResumePreview({ resume }) {
 
   return (
     <div className="resume-preview">
-      <div className="resume-paper">
+      <div className={`resume-paper template-${template}`}>
         {hasContent && (
           <div className="resume-header">
             <h1 className="resume-name">{resume.personalInfo.name || 'Your Name'}</h1>

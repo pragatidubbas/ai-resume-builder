@@ -1,6 +1,6 @@
 import './ATSScore.css';
 
-function ATSScore({ score, suggestions }) {
+function ATSScore({ score, suggestions, improvements }) {
   const getScoreColor = () => {
     if (score >= 80) return '#10b981';
     if (score >= 60) return '#f59e0b';
@@ -34,9 +34,20 @@ function ATSScore({ score, suggestions }) {
         />
       </div>
 
+      {improvements && improvements.length > 0 && (
+        <div className="ats-improvements">
+          <h4>Top 3 Improvements</h4>
+          <ul>
+            {improvements.map((improvement, index) => (
+              <li key={index}>{improvement}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       {suggestions.length > 0 && (
         <div className="ats-suggestions">
-          <h4>Suggestions</h4>
+          <h4>Missing Items</h4>
           <ul>
             {suggestions.map((suggestion, index) => (
               <li key={index}>{suggestion}</li>

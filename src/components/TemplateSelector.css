@@ -1,0 +1,30 @@
+.template-selector {
+  display: flex;
+  gap: 8px;
+  padding: 4px;
+  background: #f5f5f5;
+  border-radius: 8px;
+  width: fit-content;
+}
+
+.template-btn {
+  padding: 8px 20px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.template-btn:hover {
+  color: #0a0a0a;
+}
+
+.template-btn.active {
+  background: #fff;
+  color: #0a0a0a;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}

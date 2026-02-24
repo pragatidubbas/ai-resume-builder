@@ -1,15 +1,24 @@
 import { useState, useEffect } from 'react';
 import Navigation from '../components/Navigation';
+import TemplateSelector from '../components/TemplateSelector';
 import { resumeStore } from '../store/resumeStore';
 import './Preview.css';
 
 function Preview() {
   const [resume, setResume] = useState(resumeStore.getResume());
+  const [template, setTemplate] = useState(resumeStore.getTemplate());
 
   useEffect(() => {
     const stored = resumeStore.getResume();
+    const storedTemplate = resumeStore.getTemplate();
     setResume(stored);
+    setTemplate(storedTemplate);
   }, []);
+
+  const handleTemplateChange = (newTemplate) => {
+    setTemplate(newTemplate);
+    resumeStore.saveTemplate(newTemplate);
+  };
 
   const hasContent = resume.personalInfo.name || 
                      resume.personalInfo.email || 
@@ -22,7 +31,13 @@ function Preview() {
     <div className="preview-page">
       <Navigation />
       <div className="preview-container">
-        <div className="preview-paper">
+        <div className="preview-controls">
+          <TemplateSelector 
+            selectedTemplate={template} 
+            onTemplateChange={handleTemplateChange} 
+          />
+        </div>
+        <div className={`preview-paper template-${template}`}>
           {hasContent && (
             <div className="preview-header">
               <h1 className="preview-name">{resume.personalInfo.name || 'Your Name'}</h1>

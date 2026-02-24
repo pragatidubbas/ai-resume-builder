@@ -84,3 +84,41 @@
   left: 8px;
   color: #999;
 }
+
+.ats-improvements {
+  border-top: 1px solid #e5e5e5;
+  padding-top: 16px;
+  margin-top: 16px;
+}
+
+.ats-improvements h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0a0a0a;
+  margin-bottom: 12px;
+}
+
+.ats-improvements ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ats-improvements li {
+  font-size: 14px;
+  color: #666;
+  padding-left: 20px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.ats-improvements li::before {
+  content: '→';
+  position: absolute;
+  left: 8px;
+  color: #0a0a0a;
+  font-weight: 600;
+}

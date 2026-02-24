@@ -2,26 +2,40 @@ import { useState, useEffect } from 'react';
 import Navigation from '../components/Navigation';
 import ResumePreview from '../components/ResumePreview';
 import ATSScore from '../components/ATSScore';
+import TemplateSelector from '../components/TemplateSelector';
 import { resumeStore } from '../store/resumeStore';
 import { calculateATSScore } from '../utils/atsScoring';
+import { getTopImprovements } from '../utils/improvements';
+import { checkBulletGuidance } from '../utils/bulletGuidance';
 import './Builder.css';
 
 function Builder() {
   const [resume, setResume] = useState(resumeStore.getResume());
   const [atsResult, setAtsResult] = useState({ score: 0, suggestions: [] });
+  const [improvements, setImprovements] = useState([]);
+  const [template, setTemplate] = useState(resumeStore.getTemplate());
 
   // Load data on mount
   useEffect(() => {
     const stored = resumeStore.getResume();
+    const storedTemplate = resumeStore.getTemplate();
     setResume(stored);
+    setTemplate(storedTemplate);
     setAtsResult(calculateATSScore(stored));
+    setImprovements(getTopImprovements(stored));
   }, []);
 
   // Auto-save and recalculate ATS score on every change
   useEffect(() => {
     resumeStore.saveResume(resume);
     setAtsResult(calculateATSScore(resume));
+    setImprovements(getTopImprovements(resume));
   }, [resume]);
+
+  const handleTemplateChange = (newTemplate) => {
+    setTemplate(newTemplate);
+    resumeStore.saveTemplate(newTemplate);
+  };
 
   const handlePersonalInfoChange = (field, value) => {
     setResume(prev => ({
@@ -137,9 +151,15 @@ function Builder() {
         <div className="builder-form">
           <div className="form-header">
             <h2>Resume Builder</h2>
-            <button className="sample-btn" onClick={loadSample}>
-              Load Sample Data
-            </button>
+            <div className="form-header-actions">
+              <TemplateSelector 
+                selectedTemplate={template} 
+                onTemplateChange={handleTemplateChange} 
+              />
+              <button className="sample-btn" onClick={loadSample}>
+                Load Sample Data
+              </button>
+            </div>
           </div>
 
           <section className="form-section">
@@ -219,37 +239,47 @@ function Builder() {
               <h3>Experience</h3>
               <button className="add-btn" onClick={addExperience}>+ Add</button>
             </div>
-            {resume.experience.map(exp => (
-              <div key={exp.id} className="entry-card">
-                <input
-                  type="text"
-                  placeholder="Company"
-                  value={exp.company}
-                  onChange={(e) => updateExperience(exp.id, 'company', e.target.value)}
-                />
-                <input
-                  type="text"
-                  placeholder="Position"
-                  value={exp.position}
-                  onChange={(e) => updateExperience(exp.id, 'position', e.target.value)}
-                />
-                <input
-                  type="text"
-                  placeholder="Duration (e.g., 2021 - Present)"
-                  value={exp.duration}
-                  onChange={(e) => updateExperience(exp.id, 'duration', e.target.value)}
-                />
-                <textarea
-                  placeholder="Description of responsibilities and achievements..."
-                  rows={3}
-                  value={exp.description}
-                  onChange={(e) => updateExperience(exp.id, 'description', e.target.value)}
-                />
-                <button className="remove-btn" onClick={() => removeExperience(exp.id)}>
-                  Remove
-                </button>
-              </div>
-            ))}
+            {resume.experience.map(exp => {
+              const bulletSuggestions = checkBulletGuidance(exp.description);
+              return (
+                <div key={exp.id} className="entry-card">
+                  <input
+                    type="text"
+                    placeholder="Company"
+                    value={exp.company}
+                    onChange={(e) => updateExperience(exp.id, 'company', e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Position"
+                    value={exp.position}
+                    onChange={(e) => updateExperience(exp.id, 'position', e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Duration (e.g., 2021 - Present)"
+                    value={exp.duration}
+                    onChange={(e) => updateExperience(exp.id, 'duration', e.target.value)}
+                  />
+                  <textarea
+                    placeholder="Description of responsibilities and achievements..."
+                    rows={3}
+                    value={exp.description}
+                    onChange={(e) => updateExperience(exp.id, 'description', e.target.value)}
+                  />
+                  {bulletSuggestions.length > 0 && exp.description && (
+                    <div className="bullet-guidance">
+                      {bulletSuggestions.map((suggestion, idx) => (
+                        <span key={idx} className="guidance-hint">{suggestion}</span>
+                      ))}
+                    </div>
+                  )}
+                  <button className="remove-btn" onClick={() => removeExperience(exp.id)}>
+                    Remove
+                  </button>
+                </div>
+              );
+            })}
           </section>
 
           <section className="form-section">
@@ -257,31 +287,41 @@ function Builder() {
               <h3>Projects</h3>
               <button className="add-btn" onClick={addProject}>+ Add</button>
             </div>
-            {resume.projects.map(proj => (
-              <div key={proj.id} className="entry-card">
-                <input
-                  type="text"
-                  placeholder="Project Name"
-                  value={proj.name}
-                  onChange={(e) => updateProject(proj.id, 'name', e.target.value)}
-                />
-                <textarea
-                  placeholder="Project description..."
-                  rows={2}
-                  value={proj.description}
-                  onChange={(e) => updateProject(proj.id, 'description', e.target.value)}
-                />
-                <input
-                  type="text"
-                  placeholder="Technologies used"
-                  value={proj.tech}
-                  onChange={(e) => updateProject(proj.id, 'tech', e.target.value)}
-                />
-                <button className="remove-btn" onClick={() => removeProject(proj.id)}>
-                  Remove
-                </button>
-              </div>
-            ))}
+            {resume.projects.map(proj => {
+              const bulletSuggestions = checkBulletGuidance(proj.description);
+              return (
+                <div key={proj.id} className="entry-card">
+                  <input
+                    type="text"
+                    placeholder="Project Name"
+                    value={proj.name}
+                    onChange={(e) => updateProject(proj.id, 'name', e.target.value)}
+                  />
+                  <textarea
+                    placeholder="Project description..."
+                    rows={2}
+                    value={proj.description}
+                    onChange={(e) => updateProject(proj.id, 'description', e.target.value)}
+                  />
+                  {bulletSuggestions.length > 0 && proj.description && (
+                    <div className="bullet-guidance">
+                      {bulletSuggestions.map((suggestion, idx) => (
+                        <span key={idx} className="guidance-hint">{suggestion}</span>
+                      ))}
+                    </div>
+                  )}
+                  <input
+                    type="text"
+                    placeholder="Technologies used"
+                    value={proj.tech}
+                    onChange={(e) => updateProject(proj.id, 'tech', e.target.value)}
+                  />
+                  <button className="remove-btn" onClick={() => removeProject(proj.id)}>
+                    Remove
+                  </button>
+                </div>
+              );
+            })}
           </section>
 
           <section className="form-section">
@@ -314,8 +354,12 @@ function Builder() {
         </div>
 
         <div className="builder-preview">
-          <ATSScore score={atsResult.score} suggestions={atsResult.suggestions} />
-          <ResumePreview resume={resume} />
+          <ATSScore 
+            score={atsResult.score} 
+            suggestions={atsResult.suggestions}
+            improvements={improvements}
+          />
+          <ResumePreview resume={resume} template={template} />
         </div>
       </div>
     </div>
