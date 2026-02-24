@@ -1,53 +1,55 @@
 import './ATSScore.css';
+import { getScoreCategory } from '../utils/atsScoring';
 
-function ATSScore({ score, suggestions, improvements }) {
-  const getScoreColor = () => {
-    if (score >= 80) return '#10b981';
-    if (score >= 60) return '#f59e0b';
-    return '#ef4444';
-  };
-
-  const getScoreLabel = () => {
-    if (score >= 80) return 'Excellent';
-    if (score >= 60) return 'Good';
-    if (score >= 40) return 'Fair';
-    return 'Needs Work';
-  };
+function ATSScore({ score, suggestions }) {
+  const category = getScoreCategory(score);
+  
+  // Calculate circle properties
+  const radius = 50;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (score / 100) * circumference;
 
   return (
     <div className="ats-score-card">
-      <div className="ats-score-header">
-        <h3>ATS Readiness Score</h3>
-        <div className="ats-score-value" style={{ color: getScoreColor() }}>
-          {score}
-          <span className="ats-score-label">{getScoreLabel()}</span>
+      <h3 className="ats-score-title">ATS Score</h3>
+      
+      <div className="ats-score-circle-container">
+        <svg className="ats-score-circle" viewBox="0 0 120 120">
+          {/* Background circle */}
+          <circle
+            className="ats-score-circle-bg"
+            cx="60"
+            cy="60"
+            r={radius}
+          />
+          {/* Progress circle */}
+          <circle
+            className="ats-score-circle-progress"
+            cx="60"
+            cy="60"
+            r={radius}
+            style={{
+              strokeDasharray: circumference,
+              strokeDashoffset: strokeDashoffset,
+              stroke: category.color
+            }}
+          />
+        </svg>
+        <div className="ats-score-text">
+          <span className="ats-score-number" style={{ color: category.color }}>
+            {score}
+          </span>
+          <span className="ats-score-max">/100</span>
         </div>
       </div>
 
-      <div className="ats-score-meter">
-        <div 
-          className="ats-score-fill" 
-          style={{ 
-            width: `${score}%`,
-            background: getScoreColor()
-          }}
-        />
+      <div className="ats-score-label" style={{ color: category.color }}>
+        {category.label}
       </div>
-
-      {improvements && improvements.length > 0 && (
-        <div className="ats-improvements">
-          <h4>Top 3 Improvements</h4>
-          <ul>
-            {improvements.map((improvement, index) => (
-              <li key={index}>{improvement}</li>
-            ))}
-          </ul>
-        </div>
-      )}
 
       {suggestions.length > 0 && (
         <div className="ats-suggestions">
-          <h4>Missing Items</h4>
+          <h4>Improvements</h4>
           <ul>
             {suggestions.map((suggestion, index) => (
               <li key={index}>{suggestion}</li>

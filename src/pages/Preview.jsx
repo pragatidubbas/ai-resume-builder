@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import Navigation from '../components/Navigation';
 import TemplateSelector from '../components/TemplateSelector';
+import ATSScore from '../components/ATSScore';
 import { resumeStore } from '../store/resumeStore';
 import { generateResumeText, copyToClipboard, validateResumeForExport } from '../utils/textExport';
+import { calculateATSScore } from '../utils/atsScoring';
 import './Preview.css';
 
 function Preview() {
@@ -52,25 +54,32 @@ function Preview() {
   const hasLinks = resume.links.github || resume.links.linkedin;
 
   const validation = validateResumeForExport(resume);
+  const atsResult = calculateATSScore(resume);
 
   return (
     <div className="preview-page">
       <Navigation />
       <div className="preview-container">
-        <div className="preview-controls">
-          <TemplateSelector 
-            selectedTemplate={template} 
-            onTemplateChange={handleTemplateChange} 
+        <div className="preview-sidebar">
+          <ATSScore 
+            score={atsResult.score} 
+            suggestions={atsResult.suggestions} 
           />
-          <div className="export-buttons">
-            <button className="export-btn print-btn" onClick={handlePrint}>
-              Print / Save as PDF
-            </button>
-            <button className="export-btn copy-btn" onClick={handleCopyText}>
-              Copy Resume as Text
-            </button>
+          <div className="preview-controls">
+            <TemplateSelector 
+              selectedTemplate={template} 
+              onTemplateChange={handleTemplateChange} 
+            />
+            <div className="export-buttons">
+              <button className="export-btn print-btn" onClick={handlePrint}>
+                Print / Save as PDF
+              </button>
+              <button className="export-btn copy-btn" onClick={handleCopyText}>
+                Copy Resume as Text
+              </button>
+            </div>
+            {copyFeedback && <span className="copy-feedback">{copyFeedback}</span>}
           </div>
-          {copyFeedback && <span className="copy-feedback">{copyFeedback}</span>}
         </div>
         {showWarning && !validation.isValid && (
           <div className="export-warning">
