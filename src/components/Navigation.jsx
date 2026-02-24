@@ -6,29 +6,31 @@ function Navigation() {
 
   const isActive = (path) => location.pathname === path;
 
+  const navLinks = [
+    { path: '/', label: 'Home' },
+    { path: '/dashboard', label: 'Dashboard' },
+    { path: '/resume', label: 'Resume' },
+    { path: '/jobs', label: 'Jobs' },
+    { path: '/analyze', label: 'Analyze' },
+    { path: '/applications', label: 'Applications' },
+    { path: '/proof', label: 'Practice' },
+    { path: '/settings', label: 'Settings' }
+  ];
+
   return (
     <nav className="top-nav">
       <div className="nav-container">
-        <Link to="/" className="nav-logo">AI Resume Builder</Link>
+        <Link to="/" className="nav-logo">JobPlatform</Link>
         <div className="nav-links">
-          <Link 
-            to="/builder" 
-            className={`nav-link ${isActive('/builder') ? 'active' : ''}`}
-          >
-            Builder
-          </Link>
-          <Link 
-            to="/preview" 
-            className={`nav-link ${isActive('/preview') ? 'active' : ''}`}
-          >
-            Preview
-          </Link>
-          <Link 
-            to="/proof" 
-            className={`nav-link ${isActive('/proof') ? 'active' : ''}`}
-          >
-            Proof
-          </Link>
+          {navLinks.map(link => (
+            <Link 
+              key={link.path}
+              to={link.path} 
+              className={`nav-link ${isActive(link.path) ? 'active' : ''}`}
+            >
+              {link.label}
+            </Link>
+          ))}
         </div>
       </div>
     </nav>
