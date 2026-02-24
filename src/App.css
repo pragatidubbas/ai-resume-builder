@@ -1,0 +1,40 @@
+.step-content {
+  max-width: 800px;
+}
+
+.step-content h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.step-content p {
+  font-size: 16px;
+  color: #aaa;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.step-content ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.step-content li {
+  padding: 16px;
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 8px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.step-content li::before {
+  content: "→";
+  margin-right: 12px;
+  color: #3b82f6;
+  font-weight: bold;
+}
