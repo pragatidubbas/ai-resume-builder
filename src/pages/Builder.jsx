@@ -1,14 +1,26 @@
 import { useState, useEffect } from 'react';
 import Navigation from '../components/Navigation';
 import ResumePreview from '../components/ResumePreview';
+import ATSScore from '../components/ATSScore';
 import { resumeStore } from '../store/resumeStore';
+import { calculateATSScore } from '../utils/atsScoring';
 import './Builder.css';
 
 function Builder() {
   const [resume, setResume] = useState(resumeStore.getResume());
+  const [atsResult, setAtsResult] = useState({ score: 0, suggestions: [] });
 
+  // Load data on mount
+  useEffect(() => {
+    const stored = resumeStore.getResume();
+    setResume(stored);
+    setAtsResult(calculateATSScore(stored));
+  }, []);
+
+  // Auto-save and recalculate ATS score on every change
   useEffect(() => {
     resumeStore.saveResume(resume);
+    setAtsResult(calculateATSScore(resume));
   }, [resume]);
 
   const handlePersonalInfoChange = (field, value) => {
@@ -302,6 +314,7 @@ function Builder() {
         </div>
 
         <div className="builder-preview">
+          <ATSScore score={atsResult.score} suggestions={atsResult.suggestions} />
           <ResumePreview resume={resume} />
         </div>
       </div>

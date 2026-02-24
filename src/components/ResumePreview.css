@@ -126,3 +126,13 @@
   line-height: 1.8;
   color: #333;
 }
+
+.resume-empty-state {
+  padding: 64px 32px;
+  text-align: center;
+}
+
+.resume-empty-state p {
+  font-size: 15px;
+  color: #999;
+}
