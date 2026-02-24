@@ -487,3 +487,169 @@
   font-size: 15px;
   color: #999;
 }
+
+/* ===== MODERN TEMPLATE LAYOUT ===== */
+.modern-layout {
+  display: flex;
+  min-height: 800px;
+}
+
+.modern-sidebar {
+  width: 35%;
+  background: var(--sidebar-bg, #f0f9f7);
+  padding: 32px 24px;
+  border-right: 1px solid #e5e5e5;
+}
+
+.modern-main {
+  flex: 1;
+  padding: 32px;
+}
+
+.modern-header {
+  margin-bottom: 32px;
+}
+
+.modern-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent-color, #0a0a0a);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.modern-contact {
+  font-size: 12px;
+  color: #555;
+  line-height: 1.8;
+}
+
+.modern-contact div {
+  word-break: break-word;
+}
+
+.modern-links {
+  margin-top: 16px;
+  font-size: 11px;
+  color: #666;
+  line-height: 1.6;
+}
+
+.modern-links div {
+  word-break: break-all;
+}
+
+.modern-skills {
+  margin-top: 24px;
+}
+
+.modern-skill-group {
+  margin-bottom: 16px;
+}
+
+.modern-skill-group h4 {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-color, #0a0a0a);
+  margin: 0 0 6px 0;
+}
+
+.modern-skill-group p {
+  font-size: 12px;
+  color: #555;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.modern-section {
+  margin-bottom: 28px;
+}
+
+.modern-section-title {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-color, #0a0a0a);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--accent-color, #0a0a0a);
+}
+
+.modern-summary {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #333;
+}
+
+.modern-entry {
+  margin-bottom: 20px;
+}
+
+.modern-entry:last-child {
+  margin-bottom: 0;
+}
+
+.modern-entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.modern-entry-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #0a0a0a;
+  margin: 0;
+}
+
+.modern-entry-subtitle {
+  font-size: 13px;
+  color: #666;
+  margin: 0 0 8px 0;
+}
+
+.modern-entry-date {
+  font-size: 12px;
+  color: #999;
+  white-space: nowrap;
+  font-style: italic;
+}
+
+.modern-entry-description {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #444;
+  margin: 0;
+}
+
+.modern-tech {
+  font-size: 12px;
+  color: #666;
+  margin-top: 6px;
+  font-style: italic;
+}
+
+/* Color theming for Classic template */
+.template-classic .resume-section-title {
+  color: var(--accent-color, #0a0a0a);
+  border-bottom: 2px solid var(--accent-color, #e5e5e5);
+  padding-bottom: 8px;
+}
+
+.template-classic .resume-name {
+  color: var(--accent-color, #0a0a0a);
+}
+
+/* Color theming for Minimal template */
+.template-minimal .resume-section-title {
+  color: var(--accent-color, #666);
+}
+
+.template-minimal .resume-name {
+  color: var(--accent-color, #0a0a0a);
+}

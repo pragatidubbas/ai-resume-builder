@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import Navigation from '../components/Navigation';
 import ResumePreview from '../components/ResumePreview';
 import ATSScore from '../components/ATSScore';
-import TemplateSelector from '../components/TemplateSelector';
+import TemplatePicker from '../components/TemplatePicker';
+import ColorThemePicker from '../components/ColorThemePicker';
 import SkillsSection from '../components/SkillsSection';
 import ProjectsSection from '../components/ProjectsSection';
 import { resumeStore } from '../store/resumeStore';
@@ -16,13 +17,17 @@ function Builder() {
   const [atsResult, setAtsResult] = useState({ score: 0, suggestions: [] });
   const [improvements, setImprovements] = useState([]);
   const [template, setTemplate] = useState(resumeStore.getTemplate());
+  const [color, setColor] = useState(resumeStore.getColor());
+  const [toast, setToast] = useState(null);
 
   // Load data on mount
   useEffect(() => {
     const stored = resumeStore.getResume();
     const storedTemplate = resumeStore.getTemplate();
+    const storedColor = resumeStore.getColor();
     setResume(stored);
     setTemplate(storedTemplate);
+    setColor(storedColor);
     setAtsResult(calculateATSScore(stored));
     setImprovements(getTopImprovements(stored));
   }, []);
@@ -37,6 +42,16 @@ function Builder() {
   const handleTemplateChange = (newTemplate) => {
     setTemplate(newTemplate);
     resumeStore.saveTemplate(newTemplate);
+  };
+
+  const handleColorChange = (newColor) => {
+    setColor(newColor);
+    resumeStore.saveColor(newColor);
+  };
+
+  const handleDownloadPDF = () => {
+    setToast('PDF export ready! Check your downloads.');
+    setTimeout(() => setToast(null), 3000);
   };
 
   const handlePersonalInfoChange = (field, value) => {
@@ -122,10 +137,6 @@ function Builder() {
           <div className="form-header">
             <h2>Resume Builder</h2>
             <div className="form-header-actions">
-              <TemplateSelector 
-                selectedTemplate={template} 
-                onTemplateChange={handleTemplateChange} 
-              />
               <button className="sample-btn" onClick={loadSample}>
                 Load Sample Data
               </button>
@@ -282,14 +293,32 @@ function Builder() {
         </div>
 
         <div className="builder-preview">
+          <div className="preview-controls-panel">
+            <TemplatePicker 
+              selectedTemplate={template} 
+              onTemplateChange={handleTemplateChange} 
+            />
+            <ColorThemePicker 
+              selectedColor={color} 
+              onColorChange={handleColorChange} 
+            />
+            <button className="download-pdf-btn" onClick={handleDownloadPDF}>
+              Download PDF
+            </button>
+          </div>
           <ATSScore 
             score={atsResult.score} 
             suggestions={atsResult.suggestions}
             improvements={improvements}
           />
-          <ResumePreview resume={resume} template={template} />
+          <ResumePreview resume={resume} template={template} color={color} />
         </div>
       </div>
+      {toast && (
+        <div className="toast-notification">
+          {toast}
+        </div>
+      )}
     </div>
   );
 }

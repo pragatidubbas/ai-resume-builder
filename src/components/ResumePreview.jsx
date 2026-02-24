@@ -1,16 +1,154 @@
 import './ResumePreview.css';
 
-function ResumePreview({ resume, template = 'classic' }) {
+const COLOR_HSL = {
+  teal: '168, 60%, 40%',
+  navy: '220, 60%, 35%',
+  burgundy: '345, 60%, 35%',
+  forest: '150, 50%, 30%',
+  charcoal: '0, 0%, 25%'
+};
+
+function ResumePreview({ resume, template = 'classic', color = 'teal' }) {
   const hasContent = resume.personalInfo.name || 
                      resume.personalInfo.email || 
                      resume.personalInfo.phone || 
                      resume.personalInfo.location;
 
   const hasLinks = resume.links.github || resume.links.linkedin;
+  
+  const colorHsl = COLOR_HSL[color] || COLOR_HSL.teal;
+  const accentColor = `hsl(${colorHsl})`;
+  const sidebarBg = `hsl(${colorHsl.split(',')[0]}, ${colorHsl.split(',')[1]}, 95%)`;
 
+  // Modern template layout
+  if (template === 'modern') {
+    return (
+      <div className="resume-preview">
+        <div 
+          className={`resume-paper template-${template}`}
+          style={{ '--accent-color': accentColor, '--sidebar-bg': sidebarBg }}
+        >
+          <div className="modern-layout">
+            <div className="modern-sidebar">
+              {hasContent && (
+                <div className="modern-header">
+                  <h1 className="modern-name">{resume.personalInfo.name || 'Your Name'}</h1>
+                  <div className="modern-contact">
+                    {resume.personalInfo.email && <div>{resume.personalInfo.email}</div>}
+                    {resume.personalInfo.phone && <div>{resume.personalInfo.phone}</div>}
+                    {resume.personalInfo.location && <div>{resume.personalInfo.location}</div>}
+                  </div>
+                  {hasLinks && (
+                    <div className="modern-links">
+                      {resume.links.github && <div>{resume.links.github}</div>}
+                      {resume.links.linkedin && <div>{resume.links.linkedin}</div>}
+                    </div>
+                  )}
+                </div>
+              )}
+              
+              {(resume.skills.technical?.length > 0 || resume.skills.soft?.length > 0 || resume.skills.tools?.length > 0) && (
+                <div className="modern-skills">
+                  <h2 className="modern-section-title">Skills</h2>
+                  {resume.skills.technical?.length > 0 && (
+                    <div className="modern-skill-group">
+                      <h4>Technical</h4>
+                      <p>{resume.skills.technical.join(', ')}</p>
+                    </div>
+                  )}
+                  {resume.skills.soft?.length > 0 && (
+                    <div className="modern-skill-group">
+                      <h4>Soft Skills</h4>
+                      <p>{resume.skills.soft.join(', ')}</p>
+                    </div>
+                  )}
+                  {resume.skills.tools?.length > 0 && (
+                    <div className="modern-skill-group">
+                      <h4>Tools</h4>
+                      <p>{resume.skills.tools.join(', ')}</p>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+            
+            <div className="modern-main">
+              {resume.summary && (
+                <div className="modern-section">
+                  <h2 className="modern-section-title">Summary</h2>
+                  <p className="modern-summary">{resume.summary}</p>
+                </div>
+              )}
+
+              {resume.experience.length > 0 && resume.experience.some(exp => exp.company || exp.position) && (
+                <div className="modern-section">
+                  <h2 className="modern-section-title">Experience</h2>
+                  {resume.experience.map(exp => (
+                    (exp.company || exp.position) && (
+                      <div key={exp.id} className="modern-entry">
+                        <div className="modern-entry-header">
+                          <h3 className="modern-entry-title">{exp.position || 'Position'}</h3>
+                          <span className="modern-entry-date">{exp.duration}</span>
+                        </div>
+                        <p className="modern-entry-subtitle">{exp.company}</p>
+                        {exp.description && (
+                          <p className="modern-entry-description">{exp.description}</p>
+                        )}
+                      </div>
+                    )
+                  ))}
+                </div>
+              )}
+
+              {resume.projects.length > 0 && resume.projects.some(proj => proj.name) && (
+                <div className="modern-section">
+                  <h2 className="modern-section-title">Projects</h2>
+                  {resume.projects.map(proj => (
+                    proj.name && (
+                      <div key={proj.id} className="modern-entry">
+                        <h3 className="modern-entry-title">{proj.name}</h3>
+                        {proj.description && (
+                          <p className="modern-entry-description">{proj.description}</p>
+                        )}
+                        {proj.tech && proj.tech.length > 0 && (
+                          <p className="modern-tech">{proj.tech.join(', ')}</p>
+                        )}
+                      </div>
+                    )
+                  ))}
+                </div>
+              )}
+
+              {resume.education.length > 0 && resume.education.some(edu => edu.school || edu.degree) && (
+                <div className="modern-section">
+                  <h2 className="modern-section-title">Education</h2>
+                  {resume.education.map(edu => (
+                    (edu.school || edu.degree) && (
+                      <div key={edu.id} className="modern-entry">
+                        <div className="modern-entry-header">
+                          <h3 className="modern-entry-title">{edu.degree || 'Degree'}</h3>
+                          <span className="modern-entry-date">{edu.year}</span>
+                        </div>
+                        <p className="modern-entry-subtitle">{edu.school}</p>
+                      </div>
+                    )
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Classic and Minimal layouts
   return (
     <div className="resume-preview">
-      <div className={`resume-paper template-${template}`}>
+      <div 
+        className={`resume-paper template-${template}`}
+        style={{ '--accent-color': accentColor }}
+      >
         {hasContent && (
           <div className="resume-header">
             <h1 className="resume-name">{resume.personalInfo.name || 'Your Name'}</h1>

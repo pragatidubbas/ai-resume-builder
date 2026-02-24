@@ -1,5 +1,6 @@
 const STORAGE_KEY = 'resumeBuilderData';
 const TEMPLATE_KEY = 'resumeTemplate';
+const COLOR_KEY = 'resumeColor';
 
 const defaultResume = {
   personalInfo: {
@@ -39,6 +40,14 @@ export const resumeStore = {
 
   saveTemplate(template) {
     localStorage.setItem(TEMPLATE_KEY, template);
+  },
+
+  getColor() {
+    return localStorage.getItem(COLOR_KEY) || 'teal';
+  },
+
+  saveColor(color) {
+    localStorage.setItem(COLOR_KEY, color);
   },
 
   loadSampleData() {
