@@ -1,0 +1,62 @@
+.proof-page {
+  min-height: 100vh;
+  background: #fafafa;
+}
+
+.proof-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.proof-content {
+  text-align: center;
+}
+
+.proof-title {
+  font-size: 48px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+  color: #0a0a0a;
+}
+
+.proof-subtitle {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 64px;
+}
+
+.proof-placeholder {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.proof-card {
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 48px 32px;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.proof-card:hover {
+  border-color: #0a0a0a;
+  transform: translateY(-4px);
+}
+
+.proof-card h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #0a0a0a;
+}
+
+.proof-card p {
+  font-size: 15px;
+  color: #666;
+  line-height: 1.6;
+}

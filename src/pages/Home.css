@@ -1,0 +1,57 @@
+.home-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fafafa;
+}
+
+.home-container {
+  max-width: 800px;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.home-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.home-headline {
+  font-size: 64px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: #0a0a0a;
+}
+
+.home-subtext {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #666;
+  max-width: 500px;
+}
+
+.home-cta {
+  padding: 16px 48px;
+  background: #0a0a0a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 16px;
+}
+
+.home-cta:hover {
+  background: #1a1a1a;
+  transform: translateY(-2px);
+}
+
+.home-cta:active {
+  transform: translateY(0);
+}

@@ -1,0 +1,142 @@
+.preview-page {
+  min-height: 100vh;
+  background: #fafafa;
+}
+
+.preview-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.preview-paper {
+  background: #fff;
+  padding: 64px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e5e5;
+}
+
+.preview-header {
+  border-bottom: 2px solid #0a0a0a;
+  padding-bottom: 24px;
+  margin-bottom: 40px;
+}
+
+.preview-name {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+  color: #0a0a0a;
+}
+
+.preview-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.preview-contact span::after {
+  content: '|';
+  margin-left: 20px;
+  color: #ccc;
+}
+
+.preview-contact span:last-child::after {
+  content: '';
+  margin: 0;
+}
+
+.preview-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  font-size: 13px;
+  color: #666;
+  margin-top: 8px;
+}
+
+.preview-section {
+  margin-bottom: 36px;
+}
+
+.preview-section:last-child {
+  margin-bottom: 0;
+}
+
+.preview-section-title {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 20px;
+  color: #0a0a0a;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 8px;
+}
+
+.preview-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #0a0a0a;
+}
+
+.preview-entry {
+  margin-bottom: 28px;
+}
+
+.preview-entry:last-child {
+  margin-bottom: 0;
+}
+
+.preview-entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.preview-entry-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #0a0a0a;
+  margin-bottom: 4px;
+}
+
+.preview-entry-subtitle {
+  font-size: 15px;
+  color: #333;
+  font-weight: 500;
+}
+
+.preview-entry-date {
+  font-size: 13px;
+  color: #666;
+  white-space: nowrap;
+  font-style: italic;
+}
+
+.preview-tech {
+  font-size: 13px;
+  color: #666;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+@media print {
+  .preview-page {
+    background: #fff;
+  }
+
+  .preview-container {
+    padding: 0;
+  }
+
+  .preview-paper {
+    box-shadow: none;
+    border: none;
+  }
+}
