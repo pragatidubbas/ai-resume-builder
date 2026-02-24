@@ -2,11 +2,14 @@ import { useState, useEffect } from 'react';
 import Navigation from '../components/Navigation';
 import TemplateSelector from '../components/TemplateSelector';
 import { resumeStore } from '../store/resumeStore';
+import { generateResumeText, copyToClipboard, validateResumeForExport } from '../utils/textExport';
 import './Preview.css';
 
 function Preview() {
   const [resume, setResume] = useState(resumeStore.getResume());
   const [template, setTemplate] = useState(resumeStore.getTemplate());
+  const [copyFeedback, setCopyFeedback] = useState('');
+  const [showWarning, setShowWarning] = useState(false);
 
   useEffect(() => {
     const stored = resumeStore.getResume();
@@ -20,12 +23,35 @@ function Preview() {
     resumeStore.saveTemplate(newTemplate);
   };
 
+  const handlePrint = () => {
+    const validation = validateResumeForExport(resume);
+    setShowWarning(!validation.isValid);
+    window.print();
+  };
+
+  const handleCopyText = async () => {
+    const validation = validateResumeForExport(resume);
+    setShowWarning(!validation.isValid);
+    
+    const text = generateResumeText(resume);
+    try {
+      await copyToClipboard(text);
+      setCopyFeedback('Copied to clipboard!');
+      setTimeout(() => setCopyFeedback(''), 2000);
+    } catch (err) {
+      setCopyFeedback('Failed to copy');
+      setTimeout(() => setCopyFeedback(''), 2000);
+    }
+  };
+
   const hasContent = resume.personalInfo.name || 
                      resume.personalInfo.email || 
                      resume.personalInfo.phone || 
                      resume.personalInfo.location;
 
   const hasLinks = resume.links.github || resume.links.linkedin;
+
+  const validation = validateResumeForExport(resume);
 
   return (
     <div className="preview-page">
@@ -36,7 +62,22 @@ function Preview() {
             selectedTemplate={template} 
             onTemplateChange={handleTemplateChange} 
           />
+          <div className="export-buttons">
+            <button className="export-btn print-btn" onClick={handlePrint}>
+              Print / Save as PDF
+            </button>
+            <button className="export-btn copy-btn" onClick={handleCopyText}>
+              Copy Resume as Text
+            </button>
+          </div>
+          {copyFeedback && <span className="copy-feedback">{copyFeedback}</span>}
         </div>
+        {showWarning && !validation.isValid && (
+          <div className="export-warning">
+            <span className="warning-icon">⚠️</span>
+            <span>Your resume may look incomplete.</span>
+          </div>
+        )}
         <div className={`preview-paper template-${template}`}>
           {hasContent && (
             <div className="preview-header">
